@@ -1,11 +1,9 @@
-import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 import '../controller/DataController.dart';
-import '../model/ProductModel.dart';
+import 'SettingPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -22,6 +20,36 @@ class _MainPageState extends State<MainPage> {
         builder: (controller) {
           return Scaffold(
               appBar: AppBar(title: Text("MainPage"),),
+
+              drawer: Drawer(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: <Widget>[
+                    DrawerHeader(
+                      padding: EdgeInsets.zero,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                      ),
+                      child: Image.network('https://cdn.pixabay.com/photo/2023/05/02/21/08/river-7966163_1280.png', fit: BoxFit.cover,),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.home),
+                      title: Text('Home'),
+                      onTap: (){
+                        Get.back();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text('Settings'),
+                      onTap: (){
+                        Get.to(()=>SettingPage());
+                      },
+                    )
+                  ],
+                ),
+              ),
+
               body: Column(
                 children: [
                   GestureDetector(

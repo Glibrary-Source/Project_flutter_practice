@@ -7,7 +7,6 @@ class ProductModel {
   int? skip;
   int? limit;
 
-
   ProductModel({this.products, this.total, this.skip, this.limit});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
