@@ -1,35 +1,27 @@
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class PostVo {
+class UserVo {
   String? docId;
-  String? writerId;
-  String? title;
-  String? contents;
-  List<dynamic>? keyword;
+  String? email;
+  String? imagePath;
   bool? isDeleted;
   Timestamp? createAt;
   Timestamp? updateAt;
 
-
-  PostVo({
+  UserVo({
     this.docId,
-    this.writerId,
-    this.title,
-    this.contents,
-    this.keyword,
+    this.email,
+    this.imagePath,
     this.isDeleted,
     this.createAt,
     this.updateAt
   });
 
-  PostVo.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
+  UserVo.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
     docId = documentSnapshot.id;
-    writerId = documentSnapshot['writerId'];
-    title = documentSnapshot['title'];
-    contents = documentSnapshot['contents'];
-    keyword = documentSnapshot['keyword'];
+    email = documentSnapshot['email'];
+    imagePath = documentSnapshot['imagePath'];
     isDeleted = documentSnapshot['isDeleted'];
     createAt = documentSnapshot['createAt'];
     updateAt = documentSnapshot['updateAt'];
@@ -37,10 +29,8 @@ class PostVo {
 
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = {};
-    data['writerId'] = writerId??"";
-    data['title'] = title??"";
-    data['contents'] = contents??"";
-    data['keyword'] = keyword??[];
+    data['email'] = email??"";
+    data['imagePath'] = imagePath??"";
     data['isDeleted'] = isDeleted??false;
     data['createAt'] = createAt??Timestamp.now();
     data['updateAt'] = updateAt??Timestamp.now();

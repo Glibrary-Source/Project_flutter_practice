@@ -1,6 +1,10 @@
-
+import 'package:basic_firebase/controller/post_controller.dart';
+import 'package:basic_firebase/pages/PostDetailPage.dart';
+import 'package:basic_firebase/pages/Sign_up_page.dart';
+import 'package:basic_firebase/pages/write_post_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -10,40 +14,77 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
-  //firestore 인스턴스 생성
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  PostController postController = Get.find<PostController>();
 
   @override
   void initState() {
     super.initState();
-  }
 
-  void getData() async {
-    CollectionReference post = firestore.collection('Post');
-    QuerySnapshot querySnapshot = await post.get();
-
-    QueryDocumentSnapshot d = querySnapshot.docs[0];
-    print(d.data());
+    postController.getPostList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Firebase Test"), backgroundColor: Colors.blue,),
-      body: Center(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            GestureDetector(
-              onTap: () {
-                getData();
-              },
-              child: Text("파이어스토어 데이터 불러오기"),
-            )
-          ],
-        ),
-      )
-    );
+    return GetBuilder<PostController>(builder: (controller) {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text("a"),
+            backgroundColor: Colors.blue,
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.edit),
+            onPressed: () {
+              Get.to(() => WritePostPage());
+            },
+          ),
+          drawer: Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                DrawerHeader(
+                    padding: EdgeInsets.zero,
+                    decoration: BoxDecoration(color: Colors.blue),
+                    child: Image.network(
+                      'https://cdn.pixabay.com/photo/2023/05/02/21/08/river-7966163_1280.png',
+                      fit: BoxFit.cover,
+                    )
+                ),
+                ListTile(
+                  leading: Icon(Icons.login),
+                  title: Text('로그인'),
+                  onTap: (){
+                    Get.to(()=>SignUpPage());
+                  },
+                )
+              ],
+            ),
+          ),
+          body: controller.postList == null
+              ? SizedBox()
+              : ListView.builder(
+                  itemCount: controller.postList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                        onTap: () {
+                          print(
+                              "testFire ${controller!.postList[index]!.docId!}");
+                          Get.to(() => PostDetailPage(
+                                docId: controller!.postList[index]!.docId!,
+                              ));
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(vertical: 4),
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(30)),
+                          child: Column(
+                            children: [
+                              Text(controller!.postList[index]!.title!),
+                              Text(controller!.postList[index]!.contents!),
+                            ],
+                          ),
+                        ));
+                  }));
+    });
   }
 }
