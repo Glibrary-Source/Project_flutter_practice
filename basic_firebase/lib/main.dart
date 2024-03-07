@@ -16,7 +16,9 @@ void main() async {
   );
 
   Get.put(PostController());
-  Get.put(UserController());
+  var userController = Get.put(UserController());
+
+  userController.autoLogin();
 
   runApp(const MyApp());
 }

@@ -1,3 +1,4 @@
+import 'package:basic_firebase/component/CustomAnimatedIndicator.dart';
 import 'package:basic_firebase/controller/post_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,7 +58,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                           await postController.getPostList();
                           Get.back();
                         },
-                        child: Text("문서 물리삭제"))
+                        child: Text("문서 물리삭제")),
                   ],
                 ),
               ));

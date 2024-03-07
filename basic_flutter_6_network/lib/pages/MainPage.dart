@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
     return GetBuilder<DataController>(
         builder: (controller) {
           return Scaffold(
-              appBar: AppBar(title: Text("MainPage"),),
+              appBar: AppBar(title: Text("Title"),),
 
               drawer: Drawer(
                 child: ListView(
